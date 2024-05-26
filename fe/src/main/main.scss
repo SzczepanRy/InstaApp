@@ -1,0 +1,14 @@
+.main{
+    width:100vw;
+    height: 100vh;
+    @include centerDiv(column);
+    justify-content:  space-between;
+
+    main{
+        height:calc(100vh - 100px);
+        width:100%;
+        @include centerDiv(row);
+       justify-content: space-between;
+
+    }
+}

@@ -112,13 +112,21 @@ export class UserController {
         }
 
         let { found, foundUser } = this._findByEmail(email);
+        console.log(foundUser)
         if (!found) {
             return { success: false, message: "did not find the user" };
         }
         let isVlaid = Bcrypt.validate(password, foundUser.password);
-        if (!isVlaid) {
+        if (!isVlaid ) {
             return { success: false, message: "wrong password" };
         }
-        return { success: true, message: "login succesful" , token: Jwt.createToken(email) };
+        if(!foundUser.confirmed){
+
+            return { success: false, message: "user has not been validated" };
+        }
+        else{
+            console.log(foundUser)
+            return { success: true, message: "login succesful" , token: Jwt.createToken(email) };
+        }
     }
 }

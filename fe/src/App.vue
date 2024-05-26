@@ -8,4 +8,5 @@
 
 <style scoped>
 
-</style>
+    <li class="option">profie</li>
+</style

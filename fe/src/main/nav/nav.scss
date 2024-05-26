@@ -1,0 +1,10 @@
+nav {
+    height: 50px;
+    width: 100vw;
+    @include centerDiv();
+    justify-content: space-between;
+    padding: 0px 20px;
+    background-color:$dgray;
+    color:$lgray;
+
+}

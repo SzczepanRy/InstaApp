@@ -1,5 +1,7 @@
 import { getRequestData } from "./readReq.js";
+import { sendEmail} from "./mailer/mailer.js";
 const userRouter = async (userController, req, res) => {
+    console.log(req.url , req.method)
     switch (req.method) {
         case "GET":
             if (/\/api\/user\/confirm\/.+/.test(req.url)) {
@@ -19,8 +21,9 @@ const userRouter = async (userController, req, res) => {
                 let data = await getRequestData(req);
 
                 data = JSON.parse(data);
-
+                console.log(data)
                 let resp = userController.login(data);
+                console.log(resp)
                 res.writeHead(200, {
                     "Content-Type": "application/json;charset=utf-8",
                 });
@@ -32,8 +35,13 @@ const userRouter = async (userController, req, res) => {
 
                 data = JSON.parse(data);
                 // utworzenie nowego taga
+                console.log(data)
 
                 let resp = await userController.redgister(data);
+                if(resp.success){
+                    sendEmail(data.email, resp.message)
+                }
+
                 res.setHeader('Authorization', 'Bearer '+ resp.token);
 
                 res.writeHead(200, {

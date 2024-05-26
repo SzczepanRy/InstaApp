@@ -1,0 +1,58 @@
+@mixin centerDiv($type: row) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: $type;
+}
+
+@mixin input() {
+        all:unset;
+        padding: 5px;
+        border-radius: $smallRadius;
+        background-color: $lgray;
+        color: $ddgray;
+
+        &::placeholder {
+
+            color: $dgray;
+        }
+}
+
+@mixin button() {
+        all:unset;
+        padding: 5px 10px ;
+        text-align:center;
+        border-radius: $smallRadius;
+        background-color: $lgray;
+        color:$ddgray;
+        &:hover{
+            background-color: $dgray;
+            color:$lgray;
+            cursor:pointer;
+        }
+
+}
+
+
+@mixin link(){
+    all:unset;
+    color:$lblue;
+    text-decoration: underline;
+    &:hover{
+        cursor:pointer;
+    }
+}
+
+
+$llgray : #8B9CB1;
+$lgray : #727B86;
+$llgray : #8B9CB1;
+$gray: #3E4C5C;
+$dgray: #1A2533;
+$ddgray:#02060A;
+
+$lblue: #88ADDB;
+
+$bigRadius : 20px;
+$radius: 10px;
+$smallRadius: 5px;

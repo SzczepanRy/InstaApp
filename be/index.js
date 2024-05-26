@@ -17,6 +17,17 @@ let tc = new TagController();
 let fic = new FilterController();
 let uc = new UserController();
 createServer(async (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Request-Method', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PATCH, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', '*, Authorization');
+
+    if (req.method === 'OPTIONS') {
+        res.writeHead(200);
+        res.end();
+        return;
+    }
+
     if (req.url.search("/api/photos") != -1) {
         await imageRouter(fc, jc, req, res);
     } else if (req.url.search("/api/tags") != -1) {
@@ -25,7 +36,7 @@ createServer(async (req, res) => {
         await filterRouter(fic, jc, req, res);
     } else if (req.url.search("/api/user") != -1) {
         await userRouter(uc, req, res);
-    }else if (req.url.search("/api/profile") != -1) {
-        await profileRouter(fc , uc, req, res);
+    } else if (req.url.search("/api/profile") != -1) {
+        await profileRouter(fc, uc, req, res);
     }
 }).listen(process.env.APP_PORT, () => console.log("listen on 3000"));

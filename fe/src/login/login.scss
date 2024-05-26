@@ -1,0 +1,89 @@
+.register {
+    background-color: $llgray;
+    width: 100vw;
+    height: 100vh;
+    @include centerDiv(column);
+    gap: 10px;
+
+    .registerMain {
+        height: 450px;
+        width: 400px;
+        @include centerDiv(column);
+        background-color: $gray;
+        border-radius: $bigRadius;
+        gap: 20px;
+
+        input {
+            @include input();
+        }
+
+        button {
+            @include button();
+            padding-inline: 30px;
+        }
+
+        a {
+            @include link();
+        }
+
+        .title {
+            color: $ddgray;
+        }
+    }
+
+    .loginFooter {
+        width: 400px;
+        padding: 20px;
+        border-radius: $bigRadius;
+        background-color: $gray;
+        @include centerDiv();
+        a {
+            @include link();
+        }
+    }
+}
+
+.login {
+    background-color: $llgray;
+    width: 100vw;
+    height: 100vh;
+    @include centerDiv(column);
+    gap: 10px;
+
+    .loginMain {
+        height: 300px;
+        width: 400px;
+        @include centerDiv(column);
+        background-color: $gray;
+        border-radius: $bigRadius;
+        gap: 20px;
+
+        input {
+            @include input();
+        }
+
+        button {
+            @include button();
+            padding-inline: 30px;
+        }
+
+        a {
+            @include link();
+        }
+
+        .title {
+            color: $ddgray;
+        }
+    }
+
+    .registerFooter {
+        width: 400px;
+        padding: 20px;
+        border-radius: $bigRadius;
+        background-color: $gray;
+        @include centerDiv();
+        a {
+            @include link();
+        }
+    }
+}
