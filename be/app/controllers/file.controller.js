@@ -81,6 +81,7 @@ export default class FileController {
                 if (err) {
                     reject(err);
                 } else {
+                    console.log(files , fields)
                     let name = files.file.name.replace("\n", "").replace("\r", "");
                     files.file.name = name;
 

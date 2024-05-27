@@ -12,13 +12,14 @@ const photos = {
 
     mutations: {
         SET_PHOTOS_LIST(state, newPhotos) {
-            state.carsList = newPhotos
+            state.photosList = newPhotos
         },
         SET_PHOTOS_LOADING(state, val) {
 
             state.photosLoading = val
         },
         SET_SORTED_PHOTOS(state, sorted) {
+
             state.sortedPhotos = sorted
 
         }
@@ -34,6 +35,8 @@ const photos = {
         }
         ,
         GET_SORTED_PHOTOS(state) {
+
+            console.log("aaaa" + state.photosList)
             return state.sortedPhotos
         }
     },

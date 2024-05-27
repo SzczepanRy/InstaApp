@@ -1,14 +1,25 @@
-.main{
-    width:100vw;
+.main {
+    width: 100vw;
     height: 100vh;
     @include centerDiv(column);
-    justify-content:  space-between;
+    justify-content: space-between;
 
-    main{
-        height:calc(100vh - 100px);
-        width:100%;
+    .loading {
+
+        background-color:$dgray;
+        width: 200px;
+        height: 100px;
+        position: absolute;
+        left: calc(50vw - 100px);
+        top: calc(50vh - 50px);
+        border-radius: $radius;
+        @include centerDiv();
+    }
+
+    main {
+        height: calc(100vh - 100px);
+        width: 100%;
         @include centerDiv(row);
-       justify-content: space-between;
-
+        justify-content: space-between;
     }
 }

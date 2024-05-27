@@ -1,0 +1,22 @@
+.photo {
+    &:hover{
+        cursor:pointer;
+    }
+    margin:5px;
+    @include centerDiv(column);
+    width: 300px;
+    padding:5px;
+    border-radius: $radius;
+    background-color: $gray;
+    p {
+        text-align: center;
+        width:250px;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+        overflow:hidden;
+    }
+
+    .image {
+        width: 200px;
+    }
+}

@@ -1,7 +1,30 @@
-aside{
-    height:100%;
-    width:200px;
+aside {
+    height: 100%;
+    width: 200px;
+    @include centerDiv();
+    align-items: flex-start;
     background-color: $lgray;
-    color:$dgray;
+    color: $dgray;
 
+
+    .load {
+
+        .albums {
+            @include centerDiv(column);
+
+            padding: 0;
+
+            li {
+                all: unset;
+                padding: 10px;
+                &:hover{
+                    cursor:pointer;
+                }
+            }
+
+        }
+
+
+
+    }
 }

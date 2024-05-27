@@ -1,5 +1,6 @@
 <script>
 import { RouterLink } from "vue-router"
+import Photo from "./photo.vue"
 export default {
     data() {
         return{
@@ -23,17 +24,20 @@ export default {
     created() {
         this.$store.dispatch("FETCH_PHOTOS");
     },
+    components:{
+        Photo
+    }
 
 }
 </script>
 
 <template>
     <div class="home">
-        <div v-for="ph in load" class="photo">
-
-            {{ ph }}
-
-        </div>
+        <Photo v-for="ph in load" :photo="ph" class="photo" />
 
     </div>
 </template>
+
+<style scoped lang="scss">
+@import url("./home.scss");
+</style>

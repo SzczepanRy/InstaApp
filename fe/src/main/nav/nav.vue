@@ -1,10 +1,9 @@
 <script>
-export default{
-    methods:{
-        mainNav(path){
-         router.push({path})
-        //could use router-link :to
-        }
+import { RouterLink } from "vue-router"
+
+export default {
+    methods: {
+
     }
 }
 </script>
@@ -16,7 +15,11 @@ export default{
         </div>
 
         <ul class="Navigation">
-            <li @click="this.mainNav('/main/profile')" class="option">option</li>
+
+            <RouterLink :to="`/main/upload`" class="li">upload</RouterLink>
+
+            <RouterLink :to="`/main`" class="li">home</RouterLink>
+            <RouterLink :to="`/main/profile`" class="li">profile</RouterLink>
         </ul>
 
     </nav>
@@ -24,6 +27,5 @@ export default{
 </template>
 
 <style lang="scss" scoped>
-
 @import url("./nav.scss");
 </style>
