@@ -6,13 +6,24 @@ const photos = {
             sortedPhotos: [],
             photosList: [],
             photosLoading: false,
-            photosError: null
+            photosError: null,
+            photo: null,
+            photoLoading: false
         }
     },
 
     mutations: {
         SET_PHOTOS_LIST(state, newPhotos) {
             state.photosList = newPhotos
+        },
+        SET_PHOTO(state, newPhoto) {
+                console.log("SET_PHOTO" , newPhoto)
+
+            state.photo = newPhoto
+        },
+        SET_PHOTO_LOADING(state, val) {
+
+            state.photoLoading = val
         },
         SET_PHOTOS_LOADING(state, val) {
 
@@ -30,18 +41,41 @@ const photos = {
             return state.photosList
         }
         ,
-        GET_PHOTOS_LOADING(state) {
+        GET_PHOTO_LOADING(state) {
+            return state.photoLoading
+        }
+        , GET_PHOTOS_LOADING(state) {
             return state.photosLoading
         }
         ,
         GET_SORTED_PHOTOS(state) {
-
-            console.log("aaaa" + state.photosList)
             return state.sortedPhotos
+        },
+        GET_PHOTO(state) {
+            console.log("aaaaiiiii" , state.photo)
+            return state.photo
         }
     },
 
     actions: {
+        async FETCH_PHOTO({ state, commit }, id) {
+            commit("SET_PHOTO_LOADING", true)
+
+            try {
+                const data = await net.getPhoto(id)
+                console.log("fetch", data);
+                commit("SET_PHOTO", data.value)
+            }
+            catch (err) {
+                console.log("err", err);
+                commit("SET_PHOTO_ERROR", "server error!!!")
+            }
+            finally {
+                console.log("finally");
+                commit("SET_PHOTO_LOADING", false)
+            }
+        },
+
 
 
         async FETCH_PHOTOS({ state, commit }) {
@@ -91,5 +125,4 @@ const photos = {
         }
     }
 }
-
 export default photos

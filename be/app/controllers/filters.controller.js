@@ -37,7 +37,7 @@ export default class FilterController {
                 resVAl = await this.grayscale(fileObj);
                 return { status: "succes", reso: { val: "ok", url: resVAl.url } };
 
-            case "flip/flop":
+            case "flip":
                 // flip
                 resVAl = await this.flip(fileObj);
                 return { status: "succes", reso: { val: "ok", url: resVAl.url } };
@@ -62,7 +62,7 @@ export default class FilterController {
                 let meta = await sharp(fileObj.url).metadata();
                 resolve({
                     reso: { meta: meta },
-                    url: `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}-rotate.${
+                    url: `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}.${
                         fileObj.originalName.split(".")[1]
                     }`,
                 });

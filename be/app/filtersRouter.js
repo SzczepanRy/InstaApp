@@ -57,8 +57,15 @@ const  filterRouter = async (filterController, jsonController, req, res) => {
                 if (message != "succes") {
                     console.log("did noty find an element with the given id");
                 }
+                let img
+                console.log(value)
+                if(value.history.length >1){
 
-                let img = fs.readFileSync(value.url);
+                 img = fs.readFileSync(value.history[value.history.length -1].url);
+                }else{
+
+                 img = fs.readFileSync(value.url);
+                }
 
                 let format = value.url.split(".")[1];
 
@@ -74,7 +81,7 @@ const  filterRouter = async (filterController, jsonController, req, res) => {
             if (req.url == "/api/filters") {
                 let data = await getRequestData(req);
                 let dataJSON = JSON.parse(data);
-
+                console.log(dataJSON)
                 validate(dataJSON.id, "did not provide id in json with key id");
                 let id = dataJSON.id;
 

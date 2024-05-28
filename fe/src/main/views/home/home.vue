@@ -9,8 +9,10 @@ export default {
         }
     },
     methods: {
-        gotToPhoto(url) {
-            this.$router.push(url)
+        goToPhoto(id) {
+
+
+            this.$router.push(`/main/photo/${id}`)
         }
     },
     computed: {
@@ -33,7 +35,7 @@ export default {
 
 <template>
     <div class="home">
-        <Photo v-for="ph in load" :photo="ph" class="photo" />
+        <Photo v-for="ph in load" @click="this.goToPhoto(ph.id)" :photo="ph" class="photo" />
 
     </div>
 </template>

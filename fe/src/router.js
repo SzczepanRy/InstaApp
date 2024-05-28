@@ -19,7 +19,7 @@ const router = createRouter({
             component: Main,
             children: [
                 { path: "" , component: Home },
-                {path: "photo" ,name:"photo", component: Photo},
+                {path: "photo/:id" ,name:"photo", component: Photo},
                 {path:"upload" ,name:"upload", component:Upload}
             ]
         }
