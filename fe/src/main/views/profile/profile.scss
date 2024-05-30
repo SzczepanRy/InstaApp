@@ -1,0 +1,83 @@
+.mainProfile {
+    width: 100vw;
+    height: 100%;
+    @include centerDiv();
+    background: $ddgray;
+    color: $lgray;
+    gap: 20px;
+
+    .profile {
+        .img {
+            width: 400px;
+            min-height: 400px;
+            @include centerDiv();
+            img{
+            width:400px;
+            }
+        }
+
+        .addProfile {
+            background-color: $gray;
+            padding: 10px;
+            border-radius: $radius;
+            color: $ddgray;
+            text-align: center;
+
+            @include centerDiv(column);
+            gap: 10px;
+
+            .form {
+                @include centerDiv(row);
+
+            }
+        }
+    }
+
+    .desc {
+        @include centerDiv(column);
+        gap: 10px;
+        background-color: $gray;
+        color: $ddgray;
+        padding: 10px;
+        border-radius: $radius;
+
+        .box {
+            .editBox {
+
+                @include centerDiv(row);
+                gap: 5px;
+
+                .edit {
+                    @include button();
+                }
+            }
+
+            p {
+
+                padding: 5px;
+            }
+
+            .send {
+                @include button();
+                margin-left: 5px;
+            }
+
+            input {
+
+                @include input();
+            }
+
+
+        }
+
+        .email {
+            white-space: nowrap;
+            text-wrap: nowrap !important;
+        }
+    }
+
+}
+
+aside {
+    width: 0 !important;
+}

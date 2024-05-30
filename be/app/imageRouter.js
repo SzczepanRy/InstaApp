@@ -3,7 +3,8 @@ import formidable from "formidable";
 import { __dirname } from "./readReq.js";
 import path from "path";
 import fs from "fs";
-const imageRouter = async (fileController, jsonController, req, res) => {
+import { Jwt } from "./jwt/jwt.js";
+const imageRouter = async (userController, fileController, jsonController, req, res) => {
     switch (req.method) {
         case "GET":
             if (req.url == "/api/photos") {
@@ -15,6 +16,7 @@ const imageRouter = async (fileController, jsonController, req, res) => {
                 res.end(JSON.stringify(resp));
                 break;
             }
+
             if (/\/api\/photos\/[0-9]+/.test(req.url)) {
                 let id = +req.url.split("/")[req.url.split("/").length - 1];
 
@@ -27,11 +29,26 @@ const imageRouter = async (fileController, jsonController, req, res) => {
             }
 
         case "POST":
+
+
             if (req.url == "/api/photos") {
+                let { success, message } = Jwt.validateTokenHeader(req)
+
+
+                let JWTResp = await userController.validateToken(message)
+
+                console.log(JWTResp)
                 let { fields, files, dir } = await fileController.createFile(req);
                 // console.log(files.file);
                 let dataJSON = parseFileToJson(files.file, dir);
                 // console.log(fields);
+                if (JWTResp.foundUser.email) {
+
+                    dataJSON["author"] = JWTResp.foundUser.email
+                } else {
+
+                    dataJSON["author"] = "anonymus"
+                }
                 let resp = jsonController.addSingle(dataJSON);
                 res.writeHead(200, {
                     "Content-Type": "application/json;charset=utf-8",
@@ -39,8 +56,6 @@ const imageRouter = async (fileController, jsonController, req, res) => {
                 res.end(JSON.stringify(resp));
                 break;
             }
-
-            break;
         case "PATCH":
             if (req.url == "/api/photos") {
                 let data = await getRequestData(req);

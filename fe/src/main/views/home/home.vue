@@ -4,11 +4,14 @@ import Photo from "./photo.vue"
 export default {
     data() {
         return{
-
-            data: []
+            byAuthor:false,
+            byAlbum:false,
+            data: [],
+            localUser: null
         }
     },
     methods: {
+
         goToPhoto(id) {
 
 
@@ -25,6 +28,7 @@ export default {
     },
     created() {
 
+        this.localUser =  localStorage.getItem("currentUser")
         if (!localStorage.getItem("token")) {
             this.$router.push({ path: "/" });
 
@@ -32,6 +36,8 @@ export default {
         }
         this.$store.dispatch("FETCH_PHOTOS");
     },
+    props:["filterByAl", "filterByAu"]
+    ,
     components:{
         Photo
     }
@@ -40,8 +46,12 @@ export default {
 </script>
 
 <template>
+
     <div class="home">
-        <Photo v-for="ph in load" @click="this.goToPhoto(ph.id)" :photo="ph" class="photo" />
+        <div v-for="ph in load"  class="photo">
+
+        <Photo v-if="(this.filterByAl? this.filterByAl == ph.album: true )&& (this.filterByAu? this.localUser == ph.author: true)" @click="this.goToPhoto(ph.id)" :photo="ph" class="photo" />
+        </div>
 
     </div>
 </template>

@@ -21,5 +21,11 @@
         width: 100%;
         @include centerDiv(row);
         justify-content: space-between;
+        .aside{
+
+            width:200px !important;
+        }
     }
+
+
 }

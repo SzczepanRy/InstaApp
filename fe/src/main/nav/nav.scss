@@ -4,19 +4,33 @@ nav {
     @include centerDiv();
     justify-content: space-between;
     padding: 0px 20px;
-    background-color:$dgray;
-    color:$lgray;
-    .Navigation{
+    background-color: $dgray;
+    color: $lgray;
 
-    @include centerDiv();
+    .logo {
+
+        @include centerDiv(row);
+        gap:10px;
+        img {
+            width: 50px;
+            max-height:50px;
+            border-radius:40%;
+        }
+    }
+
+    .Navigation {
+
+        @include centerDiv();
         justify-content: flex-end;
-        width:80%;
-        .li{
-            color:$lgray;
+        width: 80%;
+
+        .li {
+            color: $lgray;
             margin-right: 30px;
             text-decoration: underline;
-            &:hover{
-                cursor:pointer;
+
+            &:hover {
+                cursor: pointer;
             }
         }
     }

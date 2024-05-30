@@ -61,11 +61,12 @@ export default class JsonController {
 
         let { foundId, item } = this._findId(id);
         if (!foundId) {
-            return { message: "item with the id does not exisitst ", value: nil };
+            return { message: "item with the id does not exisitst ", value: null };
         } else {
             console.log(item.history);
             item = item.history.push(data);
             return { message: "added sucessfuly", value: item };
         }
     }
+
 }

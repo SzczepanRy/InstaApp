@@ -1,7 +1,12 @@
 <script>
 export default {
-    methods: {
+    data() {
+        return {
+            currentAlbum: false,
+            currentAuthor: false,
 
+
+        }
     },
     computed: {
         load() {
@@ -14,6 +19,26 @@ export default {
     created() {
         this.$store.dispatch("FETCH_PHOTOS");
     },
+    methods: {
+        byAl(val) {
+            this.currentAlbum = val
+            this.filterByAblum(val)
+
+        },
+        byAu() {
+            this.currentAuthor = true
+
+            this.filterByAuthor()
+        },
+        res() {
+            this.currentAlbum = false
+            this.currentAuthor = false
+            this.reset()
+        }
+
+    },
+
+    props: ["filterByAuthor", "filterByAblum", "reset"]
 }
 
 </script>
@@ -26,12 +51,16 @@ export default {
             <h1>loading</h1>
         </div>
         <div v-if="!checkLoading" class="load">
+
             <ul class="albums">
-                <li v-for="alb of load">
+                <li @click="res">all posts</li>
+                <li :class="{ 'hilight': this.currentAuthor }" @click="byAu">my posts</li>
+                <li class="notLi">ALBUMS: </li>
+                <li :class="{ 'hilight': this.currentAlbum == alb.album }" @click="byAl(alb.album)" v-for="alb of load">
                     {{ alb.album }}
                 </li>
             </ul>
-  
+
         </div>
     </aside>
 </template>

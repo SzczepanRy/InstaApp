@@ -15,7 +15,11 @@ export default {
         <img class="image" :src="imgurl" alt="image">
         <p>name : {{photo.originalName}}</p>
         <p>album : {{photo.album}}</p>
-     </div>
+
+        <p>author : {{photo.author}}</p>
+
+
+    </div>
 
 </template>
 <style scoped lang="scss">

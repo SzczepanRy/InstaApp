@@ -34,6 +34,9 @@ export default {
                         const data = await net.login(this.loginEmail, this.loginPassword);
                         if (data.success) {
                             localStorage.setItem("token", data.token)
+
+                            localStorage.setItem("currentUser", this.loginEmail)
+
                             this.$router.push({ path: "/main" });
 
                         }

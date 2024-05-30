@@ -66,6 +66,7 @@ export const net = {
 
 
     },
+
     async getPhoto(id) {
         try {
             const res = await fetch("http://localhost:3000/api/photos/" + id, {
@@ -175,9 +176,9 @@ export const net = {
 
     },
 
-     async getProfile() {
+    async getProfile() {
         try {
-            const res = await fetch("http://localhost:3000/api/profile", {
+            const res = await fetch("http://localhost:3000/api/profile/data", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -201,8 +202,39 @@ export const net = {
 
 
     },
+    async getProfileImage() {
+        try {
+            let res = await fetch("http://localhost:3000/api/profile/image", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
 
-   async  updateProfile(obj) {
+                    "Authorization": "bearer " + localStorage.getItem("token")
+                },
+            })
+            console.log("get profile")
+            if (res.status == 400) {
+
+                console.log("bad data")
+                res = null
+                return res
+            } else {
+
+                let data = await res.blob()
+                const imageUrl = URL.createObjectURL(data);
+
+                return imageUrl
+            }
+        } catch (err) {
+            console.log(err)
+            return null
+        }
+
+
+
+    },
+
+    async updateProfile(obj) {
         console.log(obj)
         try {
             const res = await fetch("http://localhost:3000/api/profile", {
@@ -212,14 +244,14 @@ export const net = {
 
                     "Authorization": "bearer " + localStorage.getItem("token")
                 },
-                body:JSON.stringify(obj)
+                body: JSON.stringify(obj)
             })
             const data = await res.json()
             console.log(data)
             if (!data.success) {
 
-                localStorage.clear()
-                window.location.href = '/';
+                //   localStorage.clear()
+                //   window.location.href = '/';
             }
             return data
         } catch (err) {
@@ -227,6 +259,37 @@ export const net = {
             return null
         }
 
+
+
+    }
+    ,
+    async updateProfilePicture(file) {
+        try {
+            let formData = new FormData()
+
+            console.log("HELP MW")
+            formData.append("file", file)
+
+
+            const res = await fetch("http://localhost:3000/api/profile", {
+                method: "POST",
+                headers: {
+                    "Authorization": "bearer " + localStorage.getItem("token")
+                },
+                body: formData
+            })
+            const data = await res.json()
+            console.log(data)
+            if (!data.success) {
+
+                //   localStorage.clear()
+                //   window.location.href = '/';
+            }
+            return data
+        } catch (err) {
+            console.log(err)
+            return null
+        }
 
 
     }

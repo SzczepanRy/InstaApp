@@ -32,7 +32,7 @@ export let users = [
         id: 1,
         name: "firstName",
         lastName: "lastName",
-        email: "name@email2.pl",
+        email: "szep.rydzewski@gmail.com",
         confirmed: true,
         password: "$2a$10$YVQdbFFsI8jTxgueB8QY6OqSlc7tdJJ5ZtQ2hKRiNf.4y2tee2V6O",
     },

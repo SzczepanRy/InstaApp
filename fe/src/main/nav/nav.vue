@@ -3,19 +3,42 @@ import { RouterLink } from "vue-router"
 
 export default {
     methods: {
-        logout(){
+        logout() {
             localStorage.clear();
 
             this.$router.push("/")
         }
     }
+    ,
+    created(){
+        this.$store.dispatch("FETCH_PROFILE");
+        this.$store.dispatch("FETCH_PROFILE_PICTURE");
+
+    }
+    ,
+    computed: {
+        loadProf() {
+            return this.$store.getters.GET_PROFILE_PICTURE
+        },
+        loadProfData(){
+
+            return this.$store.getters.GET_PROFILE
+        },
+
+        checkLoading() {
+            return this.$store.getters.GET_PROFILE_PICTURE_LOADING
+        }
+    },
+
 }
 </script>
 
 <template>
     <nav>
         <div class="logo">
-            Picture App
+
+            <img :src="loadProf" alt="prof">
+            <p>{{loadProfData?.name}}</p>
         </div>
 
         <ul class="Navigation">
