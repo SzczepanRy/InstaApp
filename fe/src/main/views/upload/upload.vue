@@ -6,12 +6,21 @@ export default {
             file :null,
             album:""
         }
+    },created(){
+
+
+        if (!localStorage.getItem("token")) {
+            this.$router.push({ path: "/" });
+
+
+        }
     },
     methods:{
         send(){
             (async()=>{
                await net.sendPhoto(this.album , this.file)
-                location.reload()
+
+                this.$store.dispatch("FETCH_PHOTOS")
             })()
         }
     }

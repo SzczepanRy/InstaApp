@@ -52,7 +52,7 @@ const photos = {
             return state.sortedPhotos
         },
         GET_PHOTO(state) {
-            console.log("aaaaiiiii" , state.photo)
+
             return state.photo
         }
     },

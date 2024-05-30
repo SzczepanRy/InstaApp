@@ -24,6 +24,12 @@ export default {
         }
     },
     created() {
+
+        if (!localStorage.getItem("token")) {
+            this.$router.push({ path: "/" });
+
+
+        }
         this.$store.dispatch("FETCH_PHOTOS");
     },
     components:{

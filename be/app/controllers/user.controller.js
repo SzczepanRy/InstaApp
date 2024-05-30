@@ -68,17 +68,18 @@ export class UserController {
         return { success: true, message: "sucessfuly added the user" };
     }
     async validateToken(token) {
-        let { success, message } = Jwt.verifyToken(token);
-        if (!success) {
-            return { success, message ,foundUser:false};
-        }
-        let { found, foundUser } = this._findByEmail(message.email);
+        console.log(token)
+
+
+        let { found, foundUser } = this._findByEmail(token.email);
         if (!found) {
             return { success: false, message: "did not find the user email" ,foundUser:false};
         }
         if (foundUser.confirmed) {
+
             return { success: true, message: "sucessfuly found the user", foundUser };
         } else {
+
             return { success: false, message: "user is not valid",foundUser:false };
         }
 

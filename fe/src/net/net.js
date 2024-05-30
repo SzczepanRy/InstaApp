@@ -11,7 +11,8 @@ export const net = {
                 body: JSON.stringify({ email, password })
             })
             const data = await res.json()
-            console.log(data)
+
+
             return data
         } catch (err) {
             console.log(err)
@@ -26,7 +27,7 @@ export const net = {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-
+                    "Authorization": "bearer " + localStorage.getItem("token")
                 },
                 body: JSON.stringify({ email, password, lastname, name })
             })
@@ -47,10 +48,16 @@ export const net = {
                 headers: {
                     "Content-Type": "application/json",
 
+                    "Authorization": "bearer " + localStorage.getItem("token")
                 },
             })
             const data = await res.json()
             console.log(data)
+            if (data.message != "succes") {
+                localStorage.clear()
+                window.location.href = '/';
+
+            }
             return data
         } catch (err) {
             console.log(err)
@@ -66,10 +73,15 @@ export const net = {
                 headers: {
                     "Content-Type": "application/json",
 
+                    "Authorization": "bearer " + localStorage.getItem("token")
                 },
             })
             const data = await res.json()
-            console.log(data)
+            if (data.message != "succes") {
+
+                localStorage.clear()
+                window.location.href = '/';
+            }
             return data
         } catch (err) {
             console.log(err)
@@ -87,6 +99,9 @@ export const net = {
                 formData.append("album", album)
                 const res = await fetch("http://localhost:3000/api/photos", {
                     method: "POST",
+                    headers: {
+                        "Authorization": "bearer " + localStorage.getItem("token")
+                    },
                     body: formData
                 })
                 const data = await res.json()
@@ -94,6 +109,8 @@ export const net = {
                 return data
 
             } else {
+
+                window.location.href = '/';
                 return { success: false, message: "did not send" }
             }
         } catch (err) {
@@ -104,53 +121,115 @@ export const net = {
     }
 
     ,
-    async filterPhoto(id,lastChange,{ deg, format, width, height, top, left, red, green, blue }) {
+    async filterPhoto(id, lastChange, { deg, format, width, height, top, left, red, green, blue }) {
         try {
-            let fetchData = {id:+id ,lastChange }
+            let fetchData = { id: +id, lastChange }
 
-            if(deg){
-                fetchData["deg"]= deg
+            if (deg) {
+                fetchData["deg"] = deg
             }
 
-            if(format){
-                fetchData["format"]= format
+            if (format) {
+                fetchData["format"] = format
             }
 
-            if(width||height){
-                fetchData["width"]= width
-                fetchData["height"]=height
+            if (width || height) {
+                fetchData["width"] = width
+                fetchData["height"] = height
             }
 
-            if(top|| left){
-                fetchData["top"]= top
+            if (top || left) {
+                fetchData["top"] = top
 
-                fetchData["left"]= left
+                fetchData["left"] = left
             }
-            let colors={}
-            if(red || green || blue){
-                colors["red"]= red
-                colors["green"]= green
-                colors["blue"]= blue
+            let colors = {}
+            if (red || green || blue) {
+                colors["red"] = red
+                colors["green"] = green
+                colors["blue"] = blue
                 fetchData["colors"] = colors
             }
 
 
             const res = await fetch("http://localhost:3000/api/filters", {
                 method: "PATCH",
+                headers: {
+                    "Authorization": "bearer " + localStorage.getItem("token")
+                },
                 body: JSON.stringify(fetchData)
             })
             const data = await res.json()
-            console.log(data)
+            if (data != "succes") {
+
+                localStorage.clear()
+                window.location.href = '/';
+            }
             return data
+
 
         } catch (err) {
             console.log(err)
             return { success: false }
         }
 
+    },
+
+     async getProfile() {
+        try {
+            const res = await fetch("http://localhost:3000/api/profile", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+
+                    "Authorization": "bearer " + localStorage.getItem("token")
+                },
+            })
+            const data = await res.json()
+            console.log(data)
+            if (!data.success) {
+
+                localStorage.clear()
+                window.location.href = '/';
+            }
+            return data
+        } catch (err) {
+            console.log(err)
+            return null
+        }
+
+
+
+    },
+
+   async  updateProfile(obj) {
+        console.log(obj)
+        try {
+            const res = await fetch("http://localhost:3000/api/profile", {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+
+                    "Authorization": "bearer " + localStorage.getItem("token")
+                },
+                body:JSON.stringify(obj)
+            })
+            const data = await res.json()
+            console.log(data)
+            if (!data.success) {
+
+                localStorage.clear()
+                window.location.href = '/';
+            }
+            return data
+        } catch (err) {
+            console.log(err)
+            return null
+        }
+
+
+
     }
-
-
 
 }
 

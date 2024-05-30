@@ -1,9 +1,9 @@
 import { getRequestData, parseFileToJson, validate } from "./readReq.js";
- import fs from "fs";
+import fs from "fs";
 import { __dirname } from "./readReq.js";
 import { error } from "console";
 
-const  filterRouter = async (filterController, jsonController, req, res) => {
+const filterRouter = async (filterController, jsonController, req, res) => {
     switch (req.method) {
         case "GET":
             if (/^\/api\/filters\/metadata\/[0-9]+$/.test(req.url)) {
@@ -25,7 +25,8 @@ const  filterRouter = async (filterController, jsonController, req, res) => {
             if (/^\/api\/filters\/getimage\/[0-9]+\/filter\/[a-z]+$/.test(req.url)) {
                 let filterName = req.url.split("/")[req.url.split("/").length - 1];
                 let id = +req.url.split("/")[4];
-                console.log(id);
+                console.log(req + "req");
+
 
                 let { message, value } = jsonController.getSingle(id);
                 if (message != "succes") {
@@ -49,30 +50,41 @@ const  filterRouter = async (filterController, jsonController, req, res) => {
                 break;
             }
 
-            if (/^\/api\/filters\/getimage\/[0-9]+$/.test(req.url)) {
-                let id = +req.url.split("/")[req.url.split("/").length - 1];
+            if (/^\/api\/filters\/getimage\/[0-9]+/.test(req.url)) {
 
+                let rightUrl = req.url.split("?")[0]
+                console.log(rightUrl)
+                let id = +rightUrl.split("/")[rightUrl.split("/").length - 1];
+                console.log(id)
+                let err = null
+                let img
+                let format
                 let { message, value } = jsonController.getSingle(id);
 
                 if (message != "succes") {
                     console.log("did noty find an element with the given id");
+                    err = { success: false, message: "did not find id" }
+                } else {
+
+                    if (value.history.length > 1) {
+
+                        img = fs.readFileSync(value.history[value.history.length - 1].url);
+                    } else {
+
+                        img = fs.readFileSync(value.url);
+                    }
+
+                    format = value.url.split(".")[1];
+
+
                 }
-                let img
-                console.log(value)
-                if(value.history.length >1){
-
-                 img = fs.readFileSync(value.history[value.history.length -1].url);
-                }else{
-
-                 img = fs.readFileSync(value.url);
-                }
-
-                let format = value.url.split(".")[1];
 
                 res.writeHead(200, {
-                    "Content-Type": `image/${format}`,
+                    "Content-Type": err == null ? `image/${format}` : "application/json",
                 });
-                res.end(img);
+                console.log(err)
+                let resp = err == null ? img:err
+                res.end(resp);
 
                 break;
             }
@@ -81,6 +93,7 @@ const  filterRouter = async (filterController, jsonController, req, res) => {
             if (req.url == "/api/filters") {
                 let data = await getRequestData(req);
                 let dataJSON = JSON.parse(data);
+                console.log("########################################################")
                 console.log(dataJSON)
                 validate(dataJSON.id, "did not provide id in json with key id");
                 let id = dataJSON.id;

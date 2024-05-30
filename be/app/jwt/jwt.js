@@ -26,8 +26,9 @@ export class Jwt {
             if (authArr[0] == "Bearer" || authArr[0] == "bearer") {
                 //validi
                 let token = authArr[1]
-                console.log("current token ", token)
-                resp = { success: true, message: token }
+                let tokenResponse = this.verifyToken(token)
+                resp = tokenResponse
+                console.log("current token ", tokenResponse)
             } else {
                 resp = { success: false, message: "not valid Auth header " }
             }

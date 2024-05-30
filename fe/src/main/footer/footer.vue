@@ -5,5 +5,5 @@
 </template>
 
 <style lang="scss" scoped>
-    @import url("./footer.scss");
+   @import url("./footer.scss");
 </style>

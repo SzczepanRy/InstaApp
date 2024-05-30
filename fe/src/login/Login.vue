@@ -19,6 +19,13 @@ export default {
 
         };
     },
+    created() {
+        if (localStorage.getItem("token")) {
+            this.$router.push({ path: "/main" });
+
+
+        }
+    },
     methods: {
         login() {
             if (this.loginEmail != "" && this.loginPassword != "") {
@@ -26,7 +33,9 @@ export default {
                     (async () => {
                         const data = await net.login(this.loginEmail, this.loginPassword);
                         if (data.success) {
-                            localStorage.setItem("token", datat)
+                            localStorage.setItem("token", data.token)
+                            this.$router.push({ path: "/main" });
+
                         }
                     })();
                 } else {
@@ -40,7 +49,7 @@ export default {
             if (
                 this.registerEmail != "" &&
                 this.registerPassword != "" &&
-                this.registerPassword2 != "" &&
+                this.registerPassword2 != "" &
                 this.firstname != "" &&
                 this.lastname != ""
             ) {
