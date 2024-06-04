@@ -92,12 +92,13 @@ export const net = {
 
     }
     ,
-    async sendPhoto(album, file) {
+    async sendPhoto(album, file, tagsArr) {
         try {
             if (album != "" && file != null) {
                 const formData = new FormData()
                 formData.append("file", file)
                 formData.append("album", album)
+                formData.append("tagsArr", tagsArr)
                 const res = await fetch("http://localhost:3000/api/photos", {
                     method: "POST",
                     headers: {
@@ -293,6 +294,50 @@ export const net = {
 
 
     }
+    ,
+    async deletePhoto(id) {
+        try {
+            let res = await fetch("http://localhost:3000/api/photos/"+id, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
 
+                    "Authorization": "bearer " + localStorage.getItem("token")
+                },
+            })
+            console.log("DELETE")
+            let data = await res.json()
+
+            return data
+        } catch (err) {
+            console.log(err)
+            return null
+        }
+
+
+
+    }
+    ,
+    async getTags() {
+        try {
+            let res = await fetch("http://localhost:3000/api/tags", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+
+                    "Authorization": "bearer " + localStorage.getItem("token")
+                },
+            })
+            console.log("get profile")
+            let data = await res.json()
+
+            return data
+        } catch (err) {
+            console.log(err)
+            return null
+        }
+
+
+    }
 }
 

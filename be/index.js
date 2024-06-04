@@ -62,7 +62,7 @@ createServer(async (req, res) => {
 
         } else {
 
-            await imageRouter(fc, jc, req, res);
+            await tagRouter(tc, req, res);
         }
 
 

@@ -1,5 +1,6 @@
 import sharp from "sharp";
-
+import fs from "fs"
+sharp.cache(false)
 import { validate } from "../readReq.js";
 export default class FilterController {
     async handleChange(reqBody, fileObj) {
@@ -62,9 +63,8 @@ export default class FilterController {
                 let meta = await sharp(fileObj.url).metadata();
                 resolve({
                     reso: { meta: meta },
-                    url: `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}.${
-                        fileObj.originalName.split(".")[1]
-                    }`,
+                    url: `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}.${fileObj.originalName.split(".")[1]
+                        }`,
                 });
             } else {
                 reject("url_not_found");
@@ -85,15 +85,22 @@ export default class FilterController {
                 let meta = await sharp(fileObj.url)
                     .rotate(deg)
                     .toFile(
-                        `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}-rotate.${
-                            fileObj.originalName.split(".")[1]
+                        `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}-edit.${fileObj.originalName.split(".")[1]
                         }`
                     );
+                fs.unlink(fileObj.url, (err) => {
+                    if (err) {
+                        console.error(`Error removing file: ${err}`);
+                        return;
+                    }
+                    console.log(`File  has been successfully removed.`);
+                    fs.rename(`upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}-edit.${fileObj.originalName.split(".")[1]}`, fileObj.url, () => { })
+                });
+
                 resolve({
                     reso: { meta: meta },
-                    url: `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}-rotate.${
-                        fileObj.originalName.split(".")[1]
-                    }`,
+                    url: `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}.${fileObj.originalName.split(".")[1]
+                        }`,
                 });
             } else {
                 reject("url_not_found");
@@ -112,15 +119,22 @@ export default class FilterController {
                         height: h,
                     })
                     .toFile(
-                        `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}-resize.${
-                            fileObj.originalName.split(".")[1]
+                        `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}-edit.${fileObj.originalName.split(".")[1]
                         }`
                     );
+                fs.unlink(fileObj.url, (err) => {
+                    if (err) {
+                        console.error(`Error removing file: ${err}`);
+                        return;
+                    }
+                    console.log(`File  has been successfully removed.`);
+                    fs.rename(`upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}-edit.${fileObj.originalName.split(".")[1]}`, fileObj.url, () => { })
+                });
+
                 resolve({
                     reso: { meta: meta },
-                    url: `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}-rotate.${
-                        fileObj.originalName.split(".")[1]
-                    }`,
+                    url: `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}.${fileObj.originalName.split(".")[1]
+                        }`,
                 });
             } else {
                 reject("url_not_found");
@@ -132,10 +146,19 @@ export default class FilterController {
             if (fileObj.url) {
                 let meta = await sharp(fileObj.url)
                     .toFormat(format)
-                    .toFile(`upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}-reformat.${format}`);
+                    .toFile(`upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}-edit.${format}`);
+                fs.unlink(fileObj.url, (err) => {
+                    if (err) {
+                        console.error(`Error removing file: ${err}`);
+                        return;
+                    }
+                    console.log(`File  has been successfully removed.`);
+                    fs.rename(`upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}-edit.${fileObj.originalName.split(".")[1]}`, fileObj.url, () => { })
+                });
+
                 resolve({
                     reso: { meta: meta },
-                    url: `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}-reformat.${format}`,
+                    url: `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}.${format}`,
                 });
             } else {
                 reject("url_not_found");
@@ -148,15 +171,24 @@ export default class FilterController {
                 let meta = await sharp(fileObj.url)
                     .extract({ width: w, height: h, left: left, top: top })
                     .toFile(
-                        `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}-crop.${
-                            fileObj.originalName.split(".")[1]
+                        `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}-edit.${fileObj.originalName.split(".")[1]
                         }`
                     );
+
+                fs.unlink(fileObj.url, (err) => {
+                    if (err) {
+                        console.error(`Error removing file: ${err}`);
+                        return;
+                    }
+                    console.log(`File  has been successfully removed.`);
+                    fs.rename(`upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}-edit.${fileObj.originalName.split(".")[1]}`, fileObj.url, () => { })
+                });
+
+
                 resolve({
                     reso: { meta: meta },
-                    url: `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}-corp.${
-                        fileObj.originalName.split(".")[1]
-                    }`,
+                    url: `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}.${fileObj.originalName.split(".")[1]
+                        }`,
                 });
             } else {
                 reject("url_not_found");
@@ -169,15 +201,22 @@ export default class FilterController {
                 let meta = await sharp(fileObj.url)
                     .grayscale()
                     .toFile(
-                        `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}-grayscale.${
-                            fileObj.originalName.split(".")[1]
+                        `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}-edit.${fileObj.originalName.split(".")[1]
                         }`
                     );
+                fs.unlink(fileObj.url, (err) => {
+                    if (err) {
+                        console.error(`Error removing file: ${err}`);
+                        return;
+                    }
+                    console.log(`File  has been successfully removed.`);
+                    fs.rename(`upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}-edit.${fileObj.originalName.split(".")[1]}`, fileObj.url, () => { })
+                });
+
                 resolve({
                     reso: { meta: meta },
-                    url: `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}-grayscale.${
-                        fileObj.originalName.split(".")[1]
-                    }`,
+                    url: `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}.${fileObj.originalName.split(".")[1]
+                        }`,
                 });
             } else {
                 reject("url_not_found");
@@ -190,15 +229,22 @@ export default class FilterController {
                 let meta = await sharp(fileObj.url)
                     .flip()
                     .toFile(
-                        `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}-flip.${
-                            fileObj.originalName.split(".")[1]
+                        `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}-edit.${fileObj.originalName.split(".")[1]
                         }`
                     );
+                fs.unlink(fileObj.url, (err) => {
+                    if (err) {
+                        console.error(`Error removing file: ${err}`);
+                        return;
+                    }
+                    console.log(`File  has been successfully removed.`);
+                    fs.rename(`upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}-edit.${fileObj.originalName.split(".")[1]}`, fileObj.url, () => { })
+                });
+
                 resolve({
                     reso: { meta: meta },
-                    url: `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}-flip.${
-                        fileObj.originalName.split(".")[1]
-                    }`,
+                    url: `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}.${fileObj.originalName.split(".")[1]
+                        }`,
                 });
             } else {
                 reject("url_not_found");
@@ -211,15 +257,23 @@ export default class FilterController {
                 let meta = await sharp(fileObj.url)
                     .tint({ r: r, g: g, b: b })
                     .toFile(
-                        `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}-tint.${
-                            fileObj.originalName.split(".")[1]
+                        `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}-edit.${fileObj.originalName.split(".")[1]
                         }`
                     );
+                fs.unlink(fileObj.url, (err) => {
+                    if (err) {
+                        console.error(`Error removing file: ${err}`);
+                        return;
+                    }
+                    console.log(`File  has been successfully removed.`);
+                    fs.rename(`upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}-edit.${fileObj.originalName.split(".")[1]}`, fileObj.url, () => { })
+                });
+
+
                 resolve({
                     reso: { meta: meta },
-                    url: `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}-tint.${
-                        fileObj.originalName.split(".")[1]
-                    }`,
+                    url: `upload\\${fileObj.album}\\${fileObj.originalName.split(".")[0]}.${fileObj.originalName.split(".")[1]
+                        }`,
                 });
             } else {
                 reject("url_not_found");

@@ -29,31 +29,37 @@
 
         li {
             all: unset;
-            width:100%;
-            min-height:40px;
-            border-bottom:2px solid $dgray;
-            border-top:2px solid $dgray;
+            width: 100%;
+            min-height: 40px;
+            border-bottom: 2px solid $dgray;
+            border-top: 2px solid $dgray;
             @include centerDiv(column);
-            &:hover{
+
+            &:hover {
                 background-color: $dgray;
-                color:$lgray;
+                color: $lgray;
             }
         }
-        .form{
+
+        .form {
             @include centerDiv(column);
-            margin:20px 0px;
+            margin: 20px 0px;
             min-height: 260px;
-            border:none;
-            gap:10px;
-            input{
-                @include input()
+            border: none;
+            gap: 10px;
+
+            input {
+                @include input() ;
+
             }
-            button{
+
+            button {
                 @include button();
             }
-              &:hover{
+
+            &:hover {
                 background-color: $gray;
-                color:$ddgray;
+                color: $ddgray;
             }
         }
     }

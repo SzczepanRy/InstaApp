@@ -62,26 +62,41 @@ export default class FileController {
                 // Use it to control newFilename.
             });
             let dir = "";
+            let tagArray = []
             form.on("field", function (name, field) {
-                dir = field;
-                dir = dir.replace(" ", "").replace("\n", "").replace("\r", "");
+                if (name == "album") {
+
+                    dir = field
+
+                    console.log("########{", dir)
+                    console.log(path.join(__dirname, "\\upload\\" + dir));
+                    fs.mkdir(path.join(__dirname, "\\upload\\" + dir), (err) => {
+                        if (err) {
+                            console.log("folder exsists");
+                        } else {
+                            console.log("created folder");
+                        }
+                    });
+
+                }
+                if (name == "tagsArr") {
+                    tagArray = field.split(",").filter((el) => {
+                        if (el != "") {
+                            return el
+                        }
+                    })
+
+                }
+                //dir = dir.replace(" ", "").replace("\n", "").replace("\r", "");
 
                 // this shit doesnt work on windows console.log(!fs.existsSync());
-                console.log(path.join(__dirname, "\\upload\\" + dir));
-                fs.mkdir(path.join(__dirname, "\\upload\\" + dir), (err) => {
-                    if (err) {
-                        console.log("folder exsists");
-                    } else {
-                        console.log("created folder");
-                    }
-                });
             });
 
             form.parse(req, function (err, fields, files) {
                 if (err) {
                     reject(err);
                 } else {
-                    console.log(files , fields)
+                    console.log(files, fields)
                     let name = files.file.name.replace("\n", "").replace("\r", "");
                     files.file.name = name;
 
@@ -93,14 +108,14 @@ export default class FileController {
                     });
                     files.file.path = __dirname + "\\upload\\" + `${dir}\\` + files.file.name;
 
-                    resolve({ fields, files, dir });
+                    resolve({ fields, files, dir, tagArray });
                 }
             });
         });
     }
     async deleteFile(file) {
         return new Promise((resolve, reject) => {
-            fs.stat("./upload/" + file.originalName, function (err, stats) {
+            fs.stat(`./upload/${file.album}/${file.originalName}`, function (err, stats) {
                 if (err) {
                     reject({
                         message: "item with the id does not exist in the upload dir ",
@@ -108,7 +123,7 @@ export default class FileController {
                     });
                 }
 
-                fs.unlink("./upload/" + file.originalName, function (err) {
+                fs.unlink(`./upload/${file.album}/${file.originalName}`, function (err) {
                     if (err) {
                         reject({
                             message: "could not delete item ",

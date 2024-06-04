@@ -39,6 +39,7 @@ export default {
             (async () => {
                 await net.filterPhoto(this.id, lastChange, { deg: this.deg, format: this.format, width: this.width, height: this.height, top: this.top, left: this.left, red: this.red, green: this.green, blue: this.blue })
                 this.url=`http://localhost:3000/api/filters/getimage/${this.id}?ver=${Date.now()}`
+                window.location.reload()
             })()
 
         }
@@ -58,6 +59,7 @@ export default {
         <img :src="url" alt="imag">
         <p>name : {{ load?.originalName }}</p>
         <p>album : {{ load?.album }}</p>
+        <p>tags : {{load?.tags}}</p>
     </div>
     <div class="filters">
         <ul>

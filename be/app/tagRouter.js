@@ -9,6 +9,7 @@ const tagRouter = async (tagController, req, res) => {
                 res.writeHead(200, {
                     "Content-Type": "application/json;charset=utf-8",
                 });
+                console.log("called")
                 res.end(JSON.stringify(resp));
                 break;
             }

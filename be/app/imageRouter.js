@@ -38,7 +38,7 @@ const imageRouter = async (userController, fileController, jsonController, req, 
                 let JWTResp = await userController.validateToken(message)
 
                 console.log(JWTResp)
-                let { fields, files, dir } = await fileController.createFile(req);
+                let { fields, files, dir , tagArray } = await fileController.createFile(req);
                 // console.log(files.file);
                 let dataJSON = parseFileToJson(files.file, dir);
                 // console.log(fields);
@@ -49,6 +49,11 @@ const imageRouter = async (userController, fileController, jsonController, req, 
 
                     dataJSON["author"] = "anonymus"
                 }
+                console.log(tagArray)
+                dataJSON["tags"]= tagArray
+
+
+
                 let resp = jsonController.addSingle(dataJSON);
                 res.writeHead(200, {
                     "Content-Type": "application/json;charset=utf-8",
@@ -89,6 +94,7 @@ const imageRouter = async (userController, fileController, jsonController, req, 
 
                 let { message, value } = jsonController.deleteSingle(id);
                 let resp;
+                console.log(value)
                 if (value) {
                     resp = await fileController.deleteFile(value);
                 } else {
