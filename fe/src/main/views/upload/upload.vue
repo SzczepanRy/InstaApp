@@ -3,9 +3,10 @@ import { net } from "../../../net/net.js"
 export default {
     data() {
         return {
+
             file: null,
             album: "",
-            err:"",
+            err: "",
             selectedTags: [],
         }
     },
@@ -20,13 +21,26 @@ export default {
         }
     },
     computed: {
-
+        pitcures() {
+            return this.$store.getters.GET_PHOTOS_LIST
+        },
         load() {
             return this.$store.getters.GET_TAGS
         },
 
     },
     methods: {
+        checkPicutures() {
+            let valid = true
+            this.pitcures.map((el) => {
+
+                console.log(el.name, this.file.name)
+                if (el.originalName == this.file.name && this.album == el.album) {
+                    valid = false
+                }
+            })
+            return valid
+        },
         click(name) {
 
             if (this.selectedTags.includes(name)) {
@@ -36,15 +50,15 @@ export default {
             }
         },
         send() {
-            if (!this.album.includes("/") && this.album != "" && this.file!=null)  {
+            if (!this.album.includes("/") && this.album != "" && this.file != null && this.checkPicutures()) {
                 (async () => {
                     await net.sendPhoto(this.album, this.file, this.selectedTags)
 
                     this.$store.dispatch("FETCH_PHOTOS")
                 })()
-               this.err=""
-            }else{
-                this.err = "album cannot include a '/' \n album cannot be empty \n file cannot be empty"
+                this.err = ""
+            } else {
+                this.err = "album cannot include a '/' \n album cannot be empty \n file cannot be empty \n cannot upload \n same file to same folder"
             }
         }
     }
@@ -53,7 +67,7 @@ export default {
 <template>
     <div class="upload">
         <div class="form">
-            <pre class="err">{{this.err}}</pre>
+            <pre class="err">{{ this.err }}</pre>
             <div class="selectedTags">
 
                 {{ this.selectedTags }}
