@@ -65,7 +65,7 @@ export default {
                 </div>
 
 
-                <Photo @click="this.goToPhoto(ph.id)" :photo="ph" class="photo" />
+                <Photo @click="()=>{this.localUser == ph.author? this.goToPhoto(ph.id):true}" :photo="ph" class="photo" />
 
             </div>
         </div>

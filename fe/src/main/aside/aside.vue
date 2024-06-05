@@ -26,7 +26,7 @@ export default {
 
         },
         byAu() {
-            this.currentAuthor = true
+            this.currentAuthor = !this.currentAuthor
 
             this.filterByAuthor()
         },

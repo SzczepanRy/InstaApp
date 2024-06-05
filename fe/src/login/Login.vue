@@ -102,7 +102,7 @@ export default {
 <template>
     <div v-if="this.modalState" class="login">
         <div class="loginMain">
-            <h1 class="title">intagram</h1>
+            <h1 class="title">Picture App</h1>
             <h4>
                 {{ this.loginErr != "" ? this.loginErr : "login to your account" }}
             </h4>
@@ -127,7 +127,7 @@ export default {
 
     <div v-if="!this.modalState" class="register">
         <div class="registerMain">
-            <h1 class="titie">intagram</h1>
+            <h1 class="titie">Picture App</h1>
             <h4 class="desc">
                 {{ this.registerErr != "" ? this.registerErr : "register to view pohots form your friends!" }}
             </h4>
