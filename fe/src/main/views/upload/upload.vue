@@ -70,7 +70,7 @@ export default {
             <pre class="err">{{ this.err }}</pre>
             <div class="selectedTags">
 
-                {{ this.selectedTags }}
+            Wybrane tagi : {{ this.selectedTags }}
             </div>
             <input @input="(e) => { this.file = e.target.files[0] }" type="file" class="fileInput">
             <input @input="(e) => { this.album = e.target.value }" type="text" placeholder="album name"

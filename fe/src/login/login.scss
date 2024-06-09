@@ -1,5 +1,5 @@
 .register {
-    background-color: $llgray;
+    background-color: $lgray;
     width: 100vw;
     height: 100vh;
     @include centerDiv(column);
@@ -44,7 +44,7 @@
 }
 
 .login {
-    background-color: $llgray;
+    background-color: $lgray;
     width: 100vw;
     height: 100vh;
     @include centerDiv(column);
