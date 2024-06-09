@@ -70,7 +70,10 @@ export default {
 
 <template>
     <div v-if="checkLoading" class="loading">
+        <div class="innerLoad">
+
         <h1>loading</h1>
+        </div>
     </div>
 
     <div class="mainProfile">
